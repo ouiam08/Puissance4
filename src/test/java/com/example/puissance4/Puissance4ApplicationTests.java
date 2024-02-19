@@ -11,3 +11,4 @@ class Puissance4ApplicationTests {
     }
 
 }
+

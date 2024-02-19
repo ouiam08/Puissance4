@@ -3,7 +3,7 @@ package com.example.puissance4;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class JetonTest {
+public class TokenTest {
 
     @Test
     public void shouldCreateToken(){

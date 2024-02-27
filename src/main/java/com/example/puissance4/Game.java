@@ -1,12 +1,20 @@
 package com.example.puissance4;
 
-import com.example.puissance4.exceptions.*;
+import com.example.puissance4.exceptions.DifferentGridException;
+import com.example.puissance4.exceptions.FullColumnException;
+import com.example.puissance4.exceptions.OutOfGridRangeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.InputMismatchException;
 
 public class Game {
+    private static final Logger logger = LoggerFactory.getLogger(Game.class);
+
     private final Grid grid;
     private final Arbiter arbiter;
 
-    public Game() throws NullTokenException, NullGridException, NullPlayerException, DifferentGridException {
+    public Game() throws NullPointerException, DifferentGridException {
         this.grid = new Grid();
         Player player1 = new Player(new Token("red"), grid);
         Player player2 = new Player(new Token("green"), grid);
@@ -18,28 +26,29 @@ public class Game {
             arbiter.getCurrentPlayer().play(column);
             Displayer.displayGrid(grid);
             if (arbiter.getWinner() != null) {
-                System.out.println("Player " + arbiter.getWinner().getToken().getColor() + " wins!");
+                logger.info("Player {} wins!", arbiter.getWinner().token().getColor());
                 return;
             }
             arbiter.switchPlayer();
-            System.out.println("Next player: " + arbiter.getCurrentPlayer().getToken().getColor());
-        } catch (OutOfGridRangeException | NullTokenException | FullColumnException e) {
-            System.out.println("Invalid move. Try again.");
+            logger.info("Next player: {}", arbiter.getCurrentPlayer().token().getColor());
+        } catch (OutOfGridRangeException | NullPointerException | FullColumnException | InputMismatchException e) {
+            logger.info("Invalid move. Try again.");
         }
     }
 
     public void startGame() {
-        System.out.println("Welcome to Puissance 4!");
+        logger.info("Welcome to Puissance 4!");
         Displayer.displayGrid(grid);
-        System.out.println("Player " + arbiter.getCurrentPlayer().getToken().getColor() + " starts the game.");
+        logger.info("Player {} starts the game.", arbiter.getCurrentPlayer().token().getColor());
     }
+
     public boolean isGameOver(){
-        if(grid.isGridInterlyFull()){
+        if(grid.isGridEntirelyFull()){
             return true;
         }else return arbiter.getWinner() != null;
     }
 
     public String getCurrentPlayerColor() {
-        return arbiter.getCurrentPlayer().getToken().getColor();
+        return arbiter.getCurrentPlayer().token().getColor();
     }
 }

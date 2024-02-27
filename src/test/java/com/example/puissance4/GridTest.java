@@ -1,7 +1,6 @@
 package com.example.puissance4;
 
 import com.example.puissance4.exceptions.FullColumnException;
-import com.example.puissance4.exceptions.NullTokenException;
 import com.example.puissance4.exceptions.OutOfGridRangeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,8 @@ public class GridTest {
     @Test
     public void shouldCreateGrid(){
         Grid grid = new Grid();
-        Assertions.assertEquals(grid.getNumRows(),6);
-        Assertions.assertEquals(grid.getNumColumns(),7);
+        Assertions.assertEquals(6, grid.getNumRows());
+        Assertions.assertEquals(7, grid.getNumColumns());
     }
 
     @Test
@@ -30,27 +29,26 @@ public class GridTest {
     public  void shouldThrowExceptionIfColumnIsNull(){
         Grid grid = new Grid();
         assertThrows(OutOfGridRangeException.class, () -> grid.insert(null, new Token()));
-        assertThrows(OutOfGridRangeException.class, () -> grid.insert(null, new Token()));
     }
 
     @Test
     public  void shouldThrowExceptionIfTokenIsNull(){
         Grid grid = new Grid();
-        assertThrows(NullTokenException.class, () -> grid.insert(1, null));
-        assertThrows(NullTokenException.class, () -> grid.insert(3, null));
+        assertThrows(NullPointerException.class, () -> grid.insert(1, null));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7})
-    public void shouldInsertTokenInFirstRowOfSpecifiedColumn(int column) throws OutOfGridRangeException, NullTokenException, FullColumnException {
+    public void shouldInsertTokenInFirstRowOfSpecifiedColumn(int column) throws OutOfGridRangeException, NullPointerException, FullColumnException {
         Grid grid = new Grid();
         Token token = new Token("green");
         grid.insert(column, token);
-        Assertions.assertEquals(token, grid.getGrid().get(0).get(column-1));
+        Assertions.assertEquals(token, grid.getGridlist().get(0).get(column-1));
     }
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7})
-    public void shouldThrowExceptionIfColumnIsFull(int column) throws OutOfGridRangeException, NullTokenException, FullColumnException {
+    public void shouldThrowExceptionIfColumnIsFull(int column) throws OutOfGridRangeException, NullPointerException,
+            FullColumnException {
         Grid grid = new Grid();
         Token token = new Token("green");
         for(int i=0;i<6;i++) {
@@ -61,15 +59,15 @@ public class GridTest {
     @Test
     public void shouldReturnFalseIfGridIsNotFull() {
         Grid grid = new Grid();
-        Assertions.assertFalse(grid.isGridInterlyFull());
+        Assertions.assertFalse(grid.isGridEntirelyFull());
     }
 
     @Test
-    public void shouldReturnFalseWhenGridIsPartiallyFilled() throws OutOfGridRangeException, NullTokenException, FullColumnException {
+    public void shouldReturnFalseWhenGridIsPartiallyFilled() throws OutOfGridRangeException, NullPointerException, FullColumnException {
         Grid grid = new Grid();
             grid.insert(1, new Token("red"));
             grid.insert(2, new Token("green"));
-        Assertions.assertFalse(grid.isGridInterlyFull());
+        Assertions.assertFalse(grid.isGridEntirelyFull());
 
     }
 }

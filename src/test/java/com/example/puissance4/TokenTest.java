@@ -8,13 +8,13 @@ public class TokenTest {
     @Test
     public void shouldCreateToken(){
         Token token = new Token();
-        Assertions.assertEquals(token.getColor(),"red");
+        Assertions.assertEquals("red", token.getColor());
     }
 
     @Test
     public void shouldCreateGreenToken(){
         Token token = new Token("green");
-        Assertions.assertEquals(token.getColor(),"green");
+        Assertions.assertEquals("green", token.getColor());
     }
 
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class ArbiterTest {
 
     @Test
-    public void  shouldCreateArbiter() throws NullTokenException, NullGridException, NullPlayerException, DifferentGridException {
+    public void  shouldCreateArbiter() throws NullPointerException, DifferentGridException {
         Grid grid = new Grid();
         Player player1= new Player(new Token("red"),grid);
         Player player2= new Player(new Token("green"),grid);
@@ -22,18 +22,18 @@ public class ArbiterTest {
     @Test
     public void shouldThrowExceptionIfPlayersAreNull(){
         Grid grid = new Grid();
-        Assertions.assertThrows(NullPlayerException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 ()->new Arbiter(null,null,grid));
-        Assertions.assertThrows(NullPlayerException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 ()->new Arbiter(new Player(new Token("green"),grid),null,grid));
-        Assertions.assertThrows(NullPlayerException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 ()->new Arbiter(null,new Player(new Token("red"),grid),grid));
     }
 
     @Test
     public void shouldThrowExceptionIfGridIsNull(){
         Grid grid = new Grid();
-        Assertions.assertThrows(NullGridException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 ()->new Arbiter(new Player(new Token("red"),grid),new Player(new Token("red"),grid),null));
     }
 
@@ -47,7 +47,7 @@ public class ArbiterTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7})
-    public void shouldReturnTheWinnerIfFourTokensAreInTheSameColumn(int column) throws NullTokenException, NullGridException, DifferentGridException, NullPlayerException, OutOfGridRangeException, FullColumnException {
+    public void shouldReturnTheWinnerIfFourTokensAreInTheSameColumn(int column) throws NullPointerException, DifferentGridException, OutOfGridRangeException, FullColumnException {
         Grid grid = new Grid();
         Player player1= new Player(new Token("red"),grid);
         Player player2= new Player(new Token("green"),grid);
@@ -63,7 +63,7 @@ public class ArbiterTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4})
-    public void shouldReturnTheWinnerIfFourTokensAreInTheSameRow(int column) throws NullTokenException, NullGridException, DifferentGridException, NullPlayerException, OutOfGridRangeException, FullColumnException {
+    public void shouldReturnTheWinnerIfFourTokensAreInTheSameRow(int column) throws NullPointerException, DifferentGridException, OutOfGridRangeException, FullColumnException {
         Grid grid = new Grid();
         Player player1= new Player(new Token("red"),grid);
         Player player2= new Player(new Token("green"),grid);
@@ -77,7 +77,7 @@ public class ArbiterTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
-    public void shouldReturnTheWinnerIfFourTokensAreInBottomLeftToTopRightDiagonal(int column) throws NullTokenException, NullGridException, DifferentGridException, NullPlayerException, OutOfGridRangeException, FullColumnException {
+    public void shouldReturnTheWinnerIfFourTokensAreInBottomLeftToTopRightDiagonal(int column) throws NullPointerException, DifferentGridException, OutOfGridRangeException, FullColumnException {
         Grid grid = new Grid();
         Player player1= new Player(new Token("red"),grid);
         Player player2= new Player(new Token("green"),grid);
@@ -101,7 +101,7 @@ public class ArbiterTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
-    public void shouldReturnTheWinnerIfFourTokensAreInTopLeftToBottomRightDiagonal(int column) throws NullTokenException, NullGridException, DifferentGridException, NullPlayerException, OutOfGridRangeException, FullColumnException {
+    public void shouldReturnTheWinnerIfFourTokensAreInTopLeftToBottomRightDiagonal(int column) throws NullPointerException, DifferentGridException, OutOfGridRangeException, FullColumnException {
         Grid grid = new Grid();
         Player player1= new Player(new Token("red"),grid);
         Player player2= new Player(new Token("green"),grid);
@@ -122,7 +122,7 @@ public class ArbiterTest {
     }
 
     @Test
-    public void shouldAlternatePlayersAfterMoves() throws NullTokenException, NullGridException, DifferentGridException, NullPlayerException, OutOfGridRangeException, FullColumnException {
+    public void shouldAlternatePlayersAfterMoves() throws NullPointerException, DifferentGridException, OutOfGridRangeException, FullColumnException {
         Grid grid = new Grid();
         Player player1 = new Player(new Token("red"), grid);
         Player player2 = new Player(new Token("green"), grid);

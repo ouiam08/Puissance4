@@ -1,8 +1,6 @@
 package com.example.puissance4;
 
 import com.example.puissance4.exceptions.DifferentGridException;
-import com.example.puissance4.exceptions.NullGridException;
-import com.example.puissance4.exceptions.NullPlayerException;
 
 public class Arbiter {
     private final Player player1;
@@ -11,16 +9,16 @@ public class Arbiter {
     private Player currentPlayer;
 
 
-    public Arbiter(Player player1, Player player2, Grid grid) throws NullPlayerException, NullGridException, DifferentGridException {
+    public Arbiter(Player player1, Player player2, Grid grid) throws NullPointerException, DifferentGridException {
         if(player1 == null || player2 == null){
-            throw new NullPlayerException();
+            throw new NullPointerException();
         }
         if (grid ==  null)
         {
-            throw new NullGridException();
+            throw new NullPointerException();
         }
-        if(player1.getGrid() != player2.getGrid() || player1.getGrid() != grid || grid != player2.getGrid() ){
-            throw new DifferentGridException();
+        if(player1.grid() != player2.grid() || player1.grid() != grid || player2.grid() != grid  ){
+            throw new DifferentGridException("Only One Grid is allowed!");
         }
         this.grid=grid;
         this.player1=player1;
@@ -41,9 +39,9 @@ public class Arbiter {
     }
 
     public Player getWinner() {
-        if(grid.isTokenWinner(player1.getToken())){
+        if(grid.isTokenWinner(player1.token())){
             return player1;
-        } else if(grid.isTokenWinner(player2.getToken())) {
+        } else if(grid.isTokenWinner(player2.token())) {
             return player2;
         }
         return null;

@@ -1,7 +1,7 @@
 package com.example.puissance4.exceptions;
 
 public class DifferentGridException extends Exception{
-    public DifferentGridException() {
+    public DifferentGridException(String message) {
+        super(message);
     }
-
 }
